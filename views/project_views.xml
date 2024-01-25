@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="view_edit_project_form_inherit" model="ir.ui.view">
+            <field name="name">project.project.inherit.view</field>
+            <field name="model">project.project</field>
+            <field name="inherit_id" ref="project.edit_project"/>
+            <field name="arch" type="xml">
+                <page name="settings" position="after">
+                    <page string="Planning">
+                        <group>
+                            <field name="hours_total"/>
+                            <field name="hours_total_planned"/>
+                        </group>
+                        <field name="planning_line_ids">
+                            <tree editable="bottom">
+                                <field name="project_id"/>
+                                <field name="employee_id"/>
+                                <field name="hours_invested"/>
+                                <field name="hours_assigned_string"/>
+                                <field name="hour_pending"/>
+                                <field name="hours_pending_string"/>
+                            </tree>
+                        </field>
+                    </page>
+                </page>
+            </field>
+        </record>
+    </data>
+</odoo>

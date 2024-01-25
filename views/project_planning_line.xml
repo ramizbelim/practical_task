@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="project_planning_line_form" model="ir.ui.view">
+        <field name="name">project.planing.line.form</field>
+        <field name="model">project.planning.line</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="project_id"/>
+                        <field name="employee_id"/>
+                        <field name="hours_invested"/>
+                        <field name="hours_assigned" invisible="1"/>
+                        <field name="hours_assigned_string"/>
+                        <field name="hour_pending"/>
+                        <field name="hours_pending_string"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="project_planning_line_tree_view" model="ir.ui.view">
+        <field name="name">project.planning.line.tree</field>
+        <field name="model">project.planning.line</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="project_id"/>
+                <field name="employee_id"/>
+                <field name="hours_invested"/>
+                <field name="hours_assigned_string"/>
+                <field name="hour_pending"/>
+                <field name="hours_pending_string"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_project_planning_line" model="ir.actions.act_window">
+        <field name="name">Project Planning Line</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">project.planning.line</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem id="project_planning_line_menu" name="Project Planning" action="action_project_planning_line"/>
+
+</odoo>
+
