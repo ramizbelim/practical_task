@@ -14,8 +14,10 @@ class Project(models.Model):
     def _compute_hours_total_planned(self):
         sum_hours_invested = 0
         for rec in self.planning_line_ids:
-            sum_hours_invested += int(rec.hours_invested)
-        self.hours_total_planned = int(self.hours_total) - sum_hours_invested
+            sum_hours_invested += rec.hours_invested
+        self.hours_total_planned = self.hours_total - sum_hours_invested
+
+
 
 
 

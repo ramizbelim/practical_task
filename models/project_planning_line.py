@@ -9,12 +9,31 @@ class ProjectPlanningLine(models.Model):
                                   store=True, readonly=False)
     hours_assigned = fields.Float('H.Assigned')
     hours_assigned_string = fields.Char(string='H.Assigned')
-    hour_pending = fields.Float('H.Pending')
+    hour_pending = fields.Float('H.Pending', compute="_compute_hour_pending", store=True, readonly=False)
     hours_pending_string = fields.Char(string="H.Pending")
 
-    @api.depends('project_id', 'employee_id')
+    @api.depends('employee_id')
     def _compute_hours_invested(self):
-        unit_amountssss = self.env["account.analytic.line"].search([('name', '=', 'project_id.display_name')])
-        # print("===========",self.project_id.timesheet_ids.unit_amount)
-        print("===========",unit_amountssss)
-        # self.hours_assigned = self.project_id.timesheet_ids.unit_amount
+        total_hours_invested = 0
+        for rec in self.project_id.timesheet_ids:
+            if rec.project_id.display_name == self.project_id.display_name:
+                if self.employee_id.name == rec.employee_id.name:
+                    print("************",rec.unit_amount)
+                    total_hours_invested += rec.unit_amount
+        self.hours_invested = total_hours_invested
+
+
+
+
+    @api.onchange('employee_id')
+    def _onchange_hours_assigned(self):
+        self.hours_assigned = self.employee_id.hours_assigned
+        self.hours_assigned_string = f"{self.hours_assigned}/{self.hours_invested}"
+
+    @api.depends('hour_pending')
+    def _compute_hour_pending(self):
+        self.hour_pending = self.hours_invested - self.hours_assigned
+        if self.hours_assigned > self.hours_invested:
+            self.hours_pending_string = 0.0
+        else:
+            self.hours_pending_string = f"{self.hour_pending}/{self.hours_invested}"

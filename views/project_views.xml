@@ -18,7 +18,6 @@
                                 <field name="employee_id"/>
                                 <field name="hours_invested"/>
                                 <field name="hours_assigned_string"/>
-                                <field name="hour_pending"/>
                                 <field name="hours_pending_string"/>
                             </tree>
                         </field>
